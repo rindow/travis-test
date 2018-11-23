@@ -10,8 +10,8 @@ matrix:
         - OPENSSL=on
     - php: '5.4'
       env:
-        - INST_APC=on
         - APC=on
+        - INST_APC=on
     - php: '5.5'
       env:
         - INST_APCU=on
@@ -21,10 +21,6 @@ matrix:
         - APCU=on
     - php: '7.0'
       env:
-        - APCU=on
-    - php: '7.0'
-      env:
-        - APC=on
         - APCU=on
     - php: '7.1'
       env:
@@ -38,9 +34,9 @@ matrix:
 before_install:
   - if [[ $OPENSSL == "on" ]]; then pecl install -f openssl ; fi
   - if [[ $OPENSSL == "on" ]]; then echo "extension = openssl.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi
-  - if [[ $INST_APC == "on" ]]; then echo no | pecl install -f apc ; fi
+  - if [[ $INST_APC == "on" ]]; then echo yes | pecl install -f apc ; fi
   - if [[ $APC == "on" ]]; then echo "extension = apc.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi
-  - if [[ $INST_APCU == "on" ]]; then echo no | pecl install -f apcu ; fi
+  - if [[ $INST_APCU == "on" ]]; then echo yes | pecl install -f apcu ; fi
   - if [[ $APCU == "on" ]]; then echo "extension = apcu.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi
   - echo "apc.enable_cli = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 
