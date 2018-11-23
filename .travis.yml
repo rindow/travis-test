@@ -1,4 +1,20 @@
 language: php
 
 php:
+  - '5.4'
+  - '5.5'
+  - '5.6'
+  - '7.0'
+  - '7.1'
   - '7.2'
+  - hhvm
+
+matrix:
+  include:
+    - php: '5.3.3'
+      dist: precise
+  allow_failures:
+    - php: hhvm
+
+before_script:
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ] && [ $(php -r "echo PHP_MINOR_VERSION;") -le 3 ]; then echo "extension = openssl.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi;'
