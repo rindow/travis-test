@@ -2,6 +2,10 @@
 
 use PHPUnit\Framework\TestCase;
 
+if(version_compare(PHP_VERSION, '5.5')>=0 &&
+   version_compare(PHP_VERSION, '5.6')<0 ) {
+    include __DIR__.'../patch55.php';
+}
 class Test extends TestCase
 {
     public function testTravis()

@@ -16,5 +16,13 @@ matrix:
   allow_failures:
     - php: hhvm
 
-before_script:
+before_install:
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ] && [ $(php -r "echo PHP_MINOR_VERSION;") -le 3 ]; then pecl install openssl; fi;'
   - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ] && [ $(php -r "echo PHP_MINOR_VERSION;") -le 3 ]; then echo "extension = openssl.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi;'
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ] && [ $(php -r "echo PHP_MINOR_VERSION;") -le 4 ]; then pecl install apc; fi;'
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ] && [ $(php -r "echo PHP_MINOR_VERSION;") -le 4 ]; then echo "extension = apc.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi;'
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ] && [ $(php -r "echo PHP_MINOR_VERSION;") -ge 5 ]; then pecl install apcu; fi;'
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ] && [ $(php -r "echo PHP_MINOR_VERSION;") -ge 5 ]; then echo "extension = apcu.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi;'
+
+script: 
+  - phpunit -c tests
