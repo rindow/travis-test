@@ -14,7 +14,11 @@ class Test extends TestCase
 
     public function testApc()
     {
-        $this->assertTrue(extension_loaded('apc'));
+        if(version_compare(PHP_VERSION, '7.0')<0) {
+            $this->assertTrue(extension_loaded('apc'));
+        } else {
+            $this->assertTrue(true);
+        }
     }
 
     public function testApcu()
