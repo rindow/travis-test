@@ -2,9 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 
-if(version_compare(PHP_VERSION, '5.5')>=0 &&
-   version_compare(PHP_VERSION, '5.6')<0 &&
-   if(!class_exists('PHPUnit\Framework\TestCase'))) {
+if(!class_exists('PHPUnit\Framework\TestCase')) {
     include __DIR__.'../patch55.php';
 }
 class Test extends TestCase
