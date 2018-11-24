@@ -16,5 +16,8 @@ matrix:
 before_install:
   - phpenv config-add tests/travis/php$TRAVIS_PHP_VERSION.ini
 
+install:
+  - composer install
+
 script: 
   - phpunit -c tests
