@@ -11,7 +11,8 @@ class Test extends TestCase
 
     public function testApc()
     {
-        if(version_compare(PHP_VERSION, '7.0')<0) {
+        if(version_compare(PHP_VERSION, '7.0')<0 &&
+           version_compare(PHP_VERSION, '5.6')>=0    ) {
             $this->assertTrue(extension_loaded('apc'));
         } else {
             $this->assertTrue(true);
@@ -20,6 +21,15 @@ class Test extends TestCase
 
     public function testApcu()
     {
-        $this->assertTrue(extension_loaded('apcu'));
+        if(version_compare(PHP_VERSION, '5.6')=>0) {
+            $this->assertTrue(extension_loaded('apcu'));
+        } else {
+            $this->assertTrue(true);
+        }
+    }
+
+    public function testComposer()
+    {
+        $this->assertTrue(class_exists('Interop\\Lenient\\Annotation'));
     }
 }
