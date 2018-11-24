@@ -21,7 +21,7 @@ class Test extends TestCase
 
     public function testApcu()
     {
-        if(version_compare(PHP_VERSION, '5.6')=>0) {
+        if(version_compare(PHP_VERSION, '5.6')>=0) {
             $this->assertTrue(extension_loaded('apcu'));
         } else {
             $this->assertTrue(true);
@@ -30,6 +30,6 @@ class Test extends TestCase
 
     public function testComposer()
     {
-        $this->assertTrue(class_exists('Interop\\Lenient\\Annotation'));
+        $this->assertTrue(interface_exists('Interop\\Lenient\\Annotation\\AnnotationReader'));
     }
 }
