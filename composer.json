@@ -3,7 +3,8 @@
     "type": "library",
     "require": {
         "php": ">=5.3.3",
-        "rindow/rindow-annotation": "*"
+        "rindow/rindow-annotation": "*",
+        "rindow/rindow-stdlib": "*"
     },
     "repositories": [
         {
