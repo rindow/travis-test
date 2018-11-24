@@ -1,0 +1,20 @@
+{
+    "name": "rindow/travis-test",
+    "type": "library",
+    "require": {
+        "php": ">=5.3.3",
+        "interop-phpobjects/lenient-annotation": "*"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://rindow.github.io/rindow-packagist/packages.json",
+            "options": {
+                "ssl": {
+                    "verify_peer": "true"
+                }
+            }
+        }
+    ],
+    "minimum-stability": "dev"
+}
