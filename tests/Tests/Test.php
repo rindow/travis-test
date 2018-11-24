@@ -2,9 +2,6 @@
 
 use PHPUnit\Framework\TestCase;
 
-if(!class_exists('PHPUnit\Framework\TestCase')) {
-    include __DIR__.'/../patch55.php';
-}
 class Test extends TestCase
 {
     public function testTravis()
