@@ -4,7 +4,9 @@
     "require": {
         "php": ">=5.3.3",
         "rindow/rindow-annotation": "*",
-        "rindow/rindow-stdlib": "*"
+        "rindow/rindow-stdlib": "*",
+        "rindow/rindow-database-pdo": "*",
+        "rindow/rindow-transaction": "*"
     },
     "repositories": [
         {
