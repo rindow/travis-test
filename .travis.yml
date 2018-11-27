@@ -13,6 +13,9 @@ matrix:
     - php: '5.3'
       dist: precise
 
+env:
+  - POSTGRESQL_VERSION=9.2
+
 before_install:
   - phpenv config-add tests/travis/php$TRAVIS_PHP_VERSION.ini
   - sudo /etc/init.d/postgresql stop
