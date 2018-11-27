@@ -151,8 +151,13 @@ class Test extends TestCase
             'user'     => RINDOW_TEST_PGSQL_USER,
             'password' => 'wrongpassword',
         );
-        $connection = new Connection($config);
-        // 7
-        $connection->exec("INSERT INTO testdb (id,name) VALUES ( 1,'boo' )");
+        try {
+            $connection = new Connection($config);
+            // 7
+            $connection->exec("INSERT INTO testdb (id,name) VALUES ( 1,'boo' )");
+        } catch(\Exception $e) {
+            $connection->close();
+            throw $e;
+        }
     }
 }
