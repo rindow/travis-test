@@ -146,6 +146,7 @@ class Test extends TestCase
      */
     public function testPgsqlLoginFailedError()
     {
+        var_dump($_ENV);
         $config = array(
             'dsn' => "pgsql:host=127.0.0.1;dbname=".RINDOW_TEST_PGSQL_DBNAME,
             'user'     => RINDOW_TEST_PGSQL_USER,
