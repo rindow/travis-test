@@ -13,11 +13,12 @@ matrix:
     - php: '5.3'
       dist: precise
 
-services:
-  - postgres -c max_prepared_transactions=1
-
 before_install:
   - phpenv config-add tests/travis/php$TRAVIS_PHP_VERSION.ini
+  - sudo /etc/init.d/postgresql stop
+  - sudo chmod 777 /etc/postgresql/$POSTGRESQL_VERSION/main/postgresql.conf
+  - sudo echo "max_prepared_transactions=1" >> /etc/postgresql/$POSTGRESQL_VERSION/main/postgresql.conf
+  - sudo /etc/init.d/postgresql restart
 
 install:
   - composer install
