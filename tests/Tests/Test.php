@@ -5,6 +5,7 @@ use Rindow\Stdlib\FileUtil\FileLocator;
 use Rindow\Database\Pdo\Transaction\Xa\DataSource as XaDataSource;
 use Rindow\Transaction\Distributed\Xid;
 use Interop\Lenient\Transaction\Xa\XAResource as XAResourceInterface;
+use Rindow\Database\Pdo\Connection;
 
 class Test extends TestCase
 {
@@ -136,5 +137,22 @@ class Test extends TestCase
             echo 'close';
             throw $e;
         }
+    }
+
+    /**
+     * @expectedException        Rindow\Database\Dao\Exception\RuntimeException
+     * @expectedExceptionMessage SQLSTATE[08006]
+     * @expectedExceptionCode    -29
+     */
+    public function testPgsqlLoginFailedError()
+    {
+        $config = array(
+            'dsn' => "pgsql:host=127.0.0.1;dbname=".RINDOW_TEST_PGSQL_DBNAME,
+            'user'     => RINDOW_TEST_PGSQL_USER,
+            'password' => 'wrongpassword',
+        );
+        $connection = new Connection($config);
+        // 7
+        $connection->exec("INSERT INTO testdb (id,name) VALUES ( 1,'boo' )");
     }
 }
