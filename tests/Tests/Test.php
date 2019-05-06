@@ -1,11 +1,11 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Rindow\Stdlib\FileUtil\FileLocator;
 use Rindow\Database\Pdo\Transaction\Xa\DataSource as XaDataSource;
+use Rindow\Database\Pdo\Connection;
+use Rindow\Stdlib\FileUtil\FileLocator;
 use Rindow\Transaction\Distributed\Xid;
 use Interop\Lenient\Transaction\Xa\XAResource as XAResourceInterface;
-use Rindow\Database\Pdo\Connection;
 
 class Test extends TestCase
 {
@@ -57,13 +57,18 @@ class Test extends TestCase
     }
     public function setUpPgsql()
     {
-        usleep( RINDOW_TEST_CLEAR_CACHE_INTERVAL );
-        \Rindow\Stdlib\Cache\CacheFactory::clearCache();
-        usleep( RINDOW_TEST_CLEAR_CACHE_INTERVAL );
-        $this->rollbackAllPgsql();
-        $client = $this->getPDOClientPgsql();
-        $client->exec("DROP TABLE IF EXISTS testdb");
-        $client->exec("CREATE TABLE testdb ( id SERIAL PRIMARY KEY , name TEXT , day DATE, ser INTEGER UNIQUE)");
+        try {
+            $this->rollbackAllPgsql();
+            $client = $this->getPDOClientPgsql();
+            $client->exec("DROP TABLE IF EXISTS testdb");
+            $client->exec("CREATE TABLE testdb ( id SERIAL PRIMARY KEY , name TEXT , day DATE, ser INTEGER UNIQUE)");
+        } catch(\Exception $e) {
+            if(getenv('POSTGRESQL_VERSION'))
+                throw $e;
+            $this->markTestSkipped('pgsql is not available');
+            return false;
+        }
+        return true;
     }
 
     public function testTravis()
@@ -107,7 +112,8 @@ class Test extends TestCase
 
     public function testXAResourcePgsqlCommitNormal()
     {
-        $this->setUpPgsql();
+        if(!$this->setUpPgsql())
+            return;
 
         $config = array(
             'dsn' => 'pgsql:host=127.0.0.1;dbname='.RINDOW_TEST_PGSQL_DBNAME,
