@@ -202,6 +202,10 @@ class Test extends TestCase
             return;
         }
         var_dump(MONGODB_VERSION);
+        if(version_compare(MONGODB_VERSION, '1.5.0')<0) {
+            $this->markTestSkipped('mongodb driver version < 1.5.0');
+            return;
+        }
         $class = 'MongoDB\Driver\Exception\ServerException';
         $this->assertTrue(class_exists($class));
         $exception = new $class('test');
@@ -221,7 +225,10 @@ class Test extends TestCase
         //}
         $client = new \MongoDB\Driver\Manager();
         $servers = $client->getServers();
-        var_dump($servers);
+        if(version_compare(MONGODB_VERSION, '1.2.0')<0) {
+            $this->markTestSkipped('mongodb driver version < 1.2.0');
+            return;
+        }
         $this->assertInstanceOf('MongoDB\Driver\Server',$servers[0]);
     }
 }
