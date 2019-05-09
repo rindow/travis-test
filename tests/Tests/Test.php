@@ -192,4 +192,17 @@ class Test extends TestCase
         $query = new \MongoDB\Driver\Query(array());
         $cursor = $client->executeQuery('test.test',$query);
     }
+
+    public function testMongodbException()
+    {
+        if (!extension_loaded('mongodb')) {
+            self::$skipMongodb = 'there is no mongodb extension';
+            $this->markTestSkipped(self::$skipMongodb);
+            return;
+        }
+        $class = 'MongoDB\Driver\Exception\ServerException';
+        $this->assertTrue(class_exists($class));
+        $exception = new $class('test');
+        $this->assertTrue(true);
+    }
 }
