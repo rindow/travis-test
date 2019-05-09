@@ -219,8 +219,8 @@ class Test extends TestCase
         //    $this->markTestSkipped('mongodb driver version < 1.2.0');
         //    return;
         //}
-        $connection = new Connection(array('database'=>'test'));
-        $servers = $connection->getServers();
+        $client = new \MongoDB\Driver\Manager();
+        $servers = $client->getServers();
         var_dump($servers);
         $this->assertInstanceOf('MongoDB\Driver\Server',$servers[0]);
     }
