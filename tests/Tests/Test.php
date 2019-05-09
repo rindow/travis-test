@@ -252,7 +252,7 @@ class Test extends TestCase
         $bulkwrite = new \MongoDB\Driver\BulkWrite();
         $doc = array('name'=>'foo2');
         $id2 = $bulkwrite->insert($doc);
-        var_dump(strval($id));
+        var_dump(strval($id2));
         $client->executeBulkWrite('test.test',$bulkwrite);
         $this->assertNotEquals($id,$id2);
 
