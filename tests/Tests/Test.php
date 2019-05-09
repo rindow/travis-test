@@ -159,10 +159,10 @@ class Test extends TestCase
      */
     public function testPgsqlLoginFailedError()
     {
-        //if(getenv('TRAVIS_PHP_VERSION')) {
-        //    $this->markTestSkipped('It can not test pgsql login failure in travis.');
-        //    return;
-        //}
+        if(getenv('TRAVIS_PHP_VERSION')) {
+            $this->markTestSkipped('It can not test pgsql login failure in travis.');
+            return;
+        }
         if(!$this->setUpPgsql())
             return;
         $config = array(
