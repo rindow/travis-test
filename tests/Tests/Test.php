@@ -247,18 +247,16 @@ class Test extends TestCase
         $bulkwrite = new \MongoDB\Driver\BulkWrite();
         $doc = array('name'=>'foo');
         $id = $bulkwrite->insert($doc);
-        var_dump(strval($id));
         $client->executeBulkWrite('test.test',$bulkwrite);
         $bulkwrite = new \MongoDB\Driver\BulkWrite();
         $doc = array('name'=>'foo2');
         $id2 = $bulkwrite->insert($doc);
-        var_dump(strval($id2));
         $client->executeBulkWrite('test.test',$bulkwrite);
-        $this->assertNotEquals($id,$id2);
-
+        $this->assertNotEquals(strval($id),strval($id2));
         if(version_compare(MONGODB_VERSION, '1.2.0')<0) {
             $this->markTestSkipped('mongodb driver version < 1.2.0');
             return;
         }
+        $this->assertNotEquals($id,$id2);
     }
 }
