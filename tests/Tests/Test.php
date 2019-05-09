@@ -191,6 +191,7 @@ class Test extends TestCase
         $client = new \MongoDB\Driver\Manager();
         $query = new \MongoDB\Driver\Query(array());
         $cursor = $client->executeQuery('test.test',$query);
+        $this->assertTrue(true);
     }
 
     public function testMongodbException()
@@ -200,6 +201,7 @@ class Test extends TestCase
             $this->markTestSkipped(self::$skipMongodb);
             return;
         }
+        var_dump(MONGODB_VERSION);
         $class = 'MongoDB\Driver\Exception\ServerException';
         $this->assertTrue(class_exists($class));
         $exception = new $class('test');
