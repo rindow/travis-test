@@ -179,4 +179,11 @@ class Test extends TestCase
             throw $e;
         }
     }
+
+    public function testMongodb()
+    {
+            $client = new \MongoDB\Driver\Manager();
+            $query = new \MongoDB\Driver\Query(array());
+            $cursor = $client->executeQuery('test.test',$query);
+    }
 }
