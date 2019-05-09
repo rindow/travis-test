@@ -207,4 +207,21 @@ class Test extends TestCase
         $exception = new $class('test');
         $this->assertTrue(true);
     }
+
+    public function testServers()
+    {
+        if (!extension_loaded('mongodb')) {
+            self::$skipMongodb = 'there is no mongodb extension';
+            $this->markTestSkipped(self::$skipMongodb);
+            return;
+        }
+        //if(version_compare(MONGODB_VERSION, '1.2.0')<0) {
+        //    $this->markTestSkipped('mongodb driver version < 1.2.0');
+        //    return;
+        //}
+        $connection = new Connection(array('database'=>'test'));
+        $servers = $connection->getServers();
+        var_dump($servers);
+        $this->assertInstanceOf('MongoDB\Driver\Server',$servers[0]);
+    }
 }
