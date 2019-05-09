@@ -231,4 +231,34 @@ class Test extends TestCase
         }
         $this->assertInstanceOf('MongoDB\Driver\Server',$servers[0]);
     }
+
+    public function testObjectId()
+    {
+        if (!extension_loaded('mongodb')) {
+            self::$skipMongodb = 'there is no mongodb extension';
+            $this->markTestSkipped(self::$skipMongodb);
+            return;
+        }
+        //if(version_compare(MONGODB_VERSION, '1.2.0')<0) {
+        //    $this->markTestSkipped('mongodb driver version < 1.2.0');
+        //    return;
+        //}
+        $client = new \MongoDB\Driver\Manager();
+        $bulkwrite = new \MongoDB\Driver\BulkWrite();
+        $doc = array('name'=>'foo');
+        $id = $bulkwrite->insert($doc);
+        //var_dump($id);
+        $client->executeBulkWrite('test.test',$bulkwrite);
+        $bulkwrite = new \MongoDB\Driver\BulkWrite();
+        $doc = array('name'=>'foo2');
+        $id2 = $bulkwrite->insert($doc);
+        //var_dump($id2);
+        $client->executeBulkWrite('test.test',$bulkwrite);
+        $this->assertNotEquals($id,$id2);
+
+        if(version_compare(MONGODB_VERSION, '1.2.0')<0) {
+            $this->markTestSkipped('mongodb driver version < 1.2.0');
+            return;
+        }
+    }
 }
