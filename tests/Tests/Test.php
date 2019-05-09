@@ -11,6 +11,7 @@ class Test extends TestCase
 {
     static $RINDOW_TEST_RESOURCES;
     static $skipPgsql = false;
+    static $skipMongodb = false;
     public static function setUpBeforeClass()
     {
         self::$RINDOW_TEST_RESOURCES = __DIR__.'/../resources';
@@ -183,7 +184,8 @@ class Test extends TestCase
     public function testMongodb()
     {
         if (!extension_loaded('mongodb')) {
-            self::$skip = 'there is no mongodb extension';
+            self::$skipMongodb = 'there is no mongodb extension';
+            $this->markTestSkipped(self::$skipMongodb);
             return;
         }
         $client = new \MongoDB\Driver\Manager();
