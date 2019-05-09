@@ -182,8 +182,12 @@ class Test extends TestCase
 
     public function testMongodb()
     {
-            $client = new \MongoDB\Driver\Manager();
-            $query = new \MongoDB\Driver\Query(array());
-            $cursor = $client->executeQuery('test.test',$query);
+        if (!extension_loaded('mongodb')) {
+            self::$skip = 'there is no mongodb extension';
+            return;
+        }
+        $client = new \MongoDB\Driver\Manager();
+        $query = new \MongoDB\Driver\Query(array());
+        $cursor = $client->executeQuery('test.test',$query);
     }
 }
