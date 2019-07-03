@@ -4,6 +4,7 @@ php:
     - '5.6'
     - '7.1'
     - '7.2'
+    - '7.3'
 
 env:
   - POSTGRESQL_VERSION=9.2
@@ -12,7 +13,7 @@ matrix:
   include:
     - php: '5.3'
       dist: precise
-      env: 
+      env:
       - POSTGRESQL_VERSION=9.1
     - php: '5.4'
       dist: trusty
@@ -34,5 +35,5 @@ before_install:
 install:
   - export TRAVIS_PHP_VERSION; sh tests/travis/install-script.sh
 
-script: 
+script:
   - sh tests/travis/run-test.sh
