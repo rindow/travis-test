@@ -8,7 +8,7 @@ php:
     - '7.4'
 
 env:
-  - POSTGRESQL_VERSION=9.2
+  - POSTGRESQL_VERSION=9.6
 
 matrix:
   include:
@@ -18,10 +18,16 @@ matrix:
       - POSTGRESQL_VERSION=9.1
     - php: '5.4'
       dist: trusty
+      env:
+          - POSTGRESQL_VERSION=9.2
     - php: '5.5'
       dist: trusty
+      env:
+          - POSTGRESQL_VERSION=9.2
     - php: '7.0'
       dist: trusty
+      env:
+          - POSTGRESQL_VERSION=9.2
 
 services:
   - mongodb
